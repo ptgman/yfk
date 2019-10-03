@@ -1,3 +1,7 @@
 *.swp
 __pycache__
 *~
+*.egg-info
+__pycache__
+build
+*.tar.gz
