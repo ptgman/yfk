@@ -6,6 +6,9 @@ import os
 # yfk_bat         バッチファイルを置くフォルダ
 
 YFK_CSV = 'yfk_csv'
+YFK_CSV_MON = 'monthly'
+YFK_CSV_DAY = 'daily'
+
 # OUTPUT_DIR = os.path.join(os.path.dirname(
 #     os.path.dirname(os.path.abspath(__file__))), CSVROOT)
 YAHOO_FINANCE = os.path.join(os.environ['HOME'], 'hostpg')
