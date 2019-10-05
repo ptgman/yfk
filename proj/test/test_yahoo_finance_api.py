@@ -4,7 +4,7 @@ import pandas as pd
 from yfk import YahooFinanceApi as YFA
 from make_test_data import get_data
 
-OUTPUT_CSV = 'output_csv'
+OUTPUT_CSV = '__output_csv'
 CODE = 'KO'
 DELTA = 10e-6
 

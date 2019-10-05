@@ -3,5 +3,6 @@ __pycache__
 *~
 *.egg-info
 __pycache__
+__output_csv
 build
 *.tar.gz
