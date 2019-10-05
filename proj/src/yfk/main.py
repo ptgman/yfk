@@ -21,7 +21,7 @@ def main(csvfile, output_dir, max=True, start=None, end=None):
         for row in cin:
             yfa = YahooFinanceApi(row[0])
             try:
-                yfa.max(output_dir)
+                yfa.monthly(output_dir)
             except:
                 print('銘柄:{}のデータが作成出来ませんでした。'.format(row[0]))
                 with open(os.path.join(output_dir, ERROR_CODES), 'at') as f:

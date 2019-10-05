@@ -26,36 +26,43 @@ mon_all() {
 # 月足(1) YYYYMM-YYYYMM
 mon_yyyymm() {
     echo "YYYYMM~YYYYMM"
+    exit
 }
 
 # 月足(2) ◯ヶ月前〜YYYYMM
 mon_bm_yyyymm() {
     echo "** months ~ YYYYMM"
+    exit
 }
 
 # 月足(3) ◯年前〜YYYYMM
 mon_by_yyyymm() {
     echo "** years ~ YYYYMM"
+    exit
 }
 
 #月足(4) 最古-YYYYMM
 mon_min_yyyymm() {
     echo "Min ~ YYYYMM"
+    exit
 }
 
 #月足(5) YYYYMM〜◯ヶ月後
 mon_am_yyyymm() {
     echo "YYYYMM ~ ** months"
+    exit
 }
 
 #月足(6) YYYYMM〜◯年後
 mon_ay_yyyymm() {
     echo "YYYYMM ~ ** years"
+    exit
 }
 
 #月足(7) YYYYMM〜最新
 mon_max_yyyymm() {
     echo "YYYY ~ Max"
+    exit
 }
 
 # 月足区分
