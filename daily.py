@@ -25,13 +25,27 @@ def main(date, output_dir):
                 yfa = YFA(code, period=None, start=date, end=date, interval='1d')
                 try:
                     daily = yfa.a_day()
-                    line = '{Ticker},{Open:f},{High:f},{Low:f},{Close:f},{Adj:f},{Volume:f},{Div_date},{Dividends:f},{Sp_date},{Splits:f}'.format(
+                    if daily.Dividends == 0.0:
+                        div_date = ''
+                        dividends = ''
+                    else:
+                        div_date = date_slash
+                        dividends = '{:f}'.format(daily.Dividends)
+
+                    if daily['Stock Splits'] == 0.0:
+                        sp_date = ''
+                        splits = ''
+                    else:
+                        sp_date = div_date
+                        splits = '{:f}'.format(daily['Stock Splits'])
+
+                    line = '{Ticker},{Open:f},{High:f},{Low:f},{Close:f},{Adj:f},{Volume:f},{Div_date},{Dividends},{Sp_date},{Splits}'.format(
                         Ticker=code,
                         Open=daily.Open, High=daily.High,
                         Low=daily.Low, Close=daily.Close,
                         Adj=daily['Adj Close'], Volume=daily.Volume,
-                        Div_date=date_slash, Dividends=daily.Dividends,
-                        Sp_date=date_slash, Splits=daily['Stock Splits'])
+                        Div_date=div_date, Dividends=dividends,
+                        Sp_date=sp_date, Splits=splits)
 
                     wf.write(line)
                     wf.write('\n')

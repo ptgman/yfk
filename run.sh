@@ -5,44 +5,17 @@ hiashi() {
 
     while :
     do
-        while :
-        do
-            echo '開始年月日を入力して下さい(YYYYMMDD)'
-            read START
-            PAT=$(echo $START | egrep '^[1-9][0-9][0-9][0-9](0|1)[0-9][0-3][0-9]$')
-            if [ "$PAT" = "" ]; then
-                echo '正しい日付を入力して下さい(YYYYMMDD)'
-                continue
-            else
-                break
-            fi
-        done
-
-        while :
-        do
-            echo '終了年月日を入力して下さい(YYYYMMDD)'
-            read END
-            PAT=$(echo $END | egrep '^[1-9][0-9][0-9][0-9](0|1)[0-9][0-3][0-9]$')
-            if [ "$PAT" = "" ]; then
-                echo '正しい日付を入力して下さい(YYYYMMDD)'
-                continue
-            else
-                break
-            fi
-        done
-
-        # 日付の大小チェック
-        if [ $START -gt $END ]; then
-            echo '開始日付が終了日付より大きくなっています'
-            echo 'もう一度やり直して下さい'
-            echo ''
+        echo '取得データ年月日を入力して下さい(YYYYMMDD)'
+        read START
+        PAT=$(echo $START | egrep '^[1-9][0-9][0-9][0-9](0|1)[0-9][0-3][0-9]$')
+        if [ "$PAT" = "" ]; then
+            echo '正しい日付を入力して下さい(YYYYMMDD)'
             continue
         else
             break
         fi
     done
 
-    echo "${START}〜${END}を取得します"
 }
 
 # 月足(0) 全件取得
@@ -141,8 +114,10 @@ do
 done
 
 if [ "$DATA_DIV" = "0" ]; then
+    PY_SCRIPT=$YFK_DIR/daily.py
     hiashi
 elif [ "$DATA_DIV" = "1" ]; then
+    PY_SCRIPT=$YFK_DIR/run.py
     getsuashi
 elif [ "$DATA_DIV" = "q" -o "$DATA_DIV" = "Q" ]; then
     exit 0
@@ -151,12 +126,16 @@ else
     exit 1
 fi
 
-echo '終了しました'
-exit    # とりあえずPythonスクリプトは起動しないでおく
+# echo '終了しました'
+# exit    # とりあえずPythonスクリプトは起動しないでおく
 
 source $HOME/yfkenv/venv/bin/activate
 # pip install --upgrade yfk/proj/dist/yfk-*.*.*-py3-none-any.whl
 
-PY_SCRIPT=$YFK_DIR/run.py
-python $PY_SCRIPT
+if [ "$DATA_DIV" = "0" ]; then
+    python $PY_SCRIPT $PAT
+elif [ "$DATA_DIV" = "1" ]; then
+    python $PY_SCRIPT
+fi
+
 deactivate
