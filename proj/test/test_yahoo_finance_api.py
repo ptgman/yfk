@@ -155,15 +155,22 @@ def test_splits(ko_monthly_csv, ko_from_api_monthly):
             1 / eval(ko_monthly_csv.loc['1965-02-01'].loc['Stock_Splits']) \
             < DELTA
 
-################################
-# yfinanceパラメータ化のテスト #
-################################
-def test_monthly(ko_monthly_csv, ko_from_api_monthly_ymd):
+########################
+# 月足データ取得テスト #
+########################
+def test_monthly_start_end(ko_monthly_csv, ko_from_api_monthly_ymd):
     '''start(YYYYMMDD) - end(YYYYMMDD)'''
     assert ko_monthly_csv.loc[START].loc['Open'] - \
             float(ko_from_api_monthly_ymd.loc[START_SLA].loc['Open']) < DELTA
 
     assert is_same_value(ko_monthly_csv.loc[START:END_FIRST], ko_from_api_monthly_ymd)
+
+def test_monthly_oldest(ko_monthly_csv, tmpdir):
+    output_dir = tmpdir.mkdir('output_csv')
+    ko = YFA(CODE, period='max', end='19621231')
+    ko.monthly(str(output_dir))
+    df2 = pd.read_csv(os.path.join(str(output_dir), CODE + '.csv'), index_col=0, dtype=str).fillna('')
+    assert is_same_value(ko_monthly_csv.loc[:'1962-12-31'], df2)
 
 def test_daily():
     ''''特定日付で全件日足データを取得するテスト'''
