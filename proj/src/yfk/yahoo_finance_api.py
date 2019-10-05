@@ -115,6 +115,11 @@ class YahooFinanceApi:
         # dividends.to_csv('dividends.csv')
         # splits.to_csv('splits.csv')
 
+    def a_day(self):
+        ticker = yf.Ticker(self._code)
+        hist = ticker.history(period=self._period, start=self._start,
+                end=self._end, interval=self._interval, auto_adjust=False)
+        return hist.iloc[0]
 
 if __name__ == '__main__':
     if len(sys.argv) == 1:
