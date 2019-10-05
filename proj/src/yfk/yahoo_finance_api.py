@@ -1,14 +1,48 @@
 #1111111112222222222333333333344444444445555555555666666666677777777778888888888
 #1234567890123456789012345678901234567890123456789012345678901234567890123456789
 import sys, os
+import datetime
 import numpy as np
 import pandas as pd
 import yfinance as yf
 from yfk.config import OUTPUT_DIR
 
 class YahooFinanceApi:
-    def __init__(self, code):
+    def _adjust_date(self, date):
+        '''
+        日付を補正して「YYYY-MM-DD」で返す
+        date: YYYYMMDD
+        '''
+
+        year = int(date[:4])
+        month = int(date[4:6])
+        day = int(date[6:])
+        after_one_day = datetime.date(year, month, day) + datetime.timedelta(1)
+        the_day = '{:04}-{:02}-{:02}'.format(
+                after_one_day.year, after_one_day.month, after_one_day.day)
+
+        return the_day
+
+    def __init__(self, code, period='max', start=None, end=None, interval='1mo'):
+        '''
+        period:
+        start:  'YYYYMMDD'
+        end:    'YYYYMMDD'
+        interval:   1mo or 1d
+        '''
         self._code = code
+        self._period = period
+        if start:
+            self._start = self._adjust_date(start)
+        else:
+            self._start = start
+
+        if end:
+            self._end = self._adjust_date(end)
+        else:
+            self._end = end
+
+        self._interval = interval
 
     def _get_dividends(self, hist):
         '''
@@ -60,12 +94,13 @@ class YahooFinanceApi:
 
         return hist
 
-    def max(self, output_dir):
+    def monthly(self, output_dir):
         '''
         output_dir: CSVファイル出力ディレクトリ(YYYYMMDD_hhmmss)の絶対パス
         '''
         ticker = yf.Ticker(self._code)
-        hist = ticker.history(period='max', interval='1mo', auto_adjust=False)
+        hist = ticker.history(period=self._period, start=self._start,
+                end=self._end, interval=self._interval, auto_adjust=False)
         hist.index = [d.strftime("%Y/%m/%d") for d in hist.index]
         hist = hist.rename(columns={'Stock Splits':'Splits'})
         dividends = self._get_dividends(hist)
