@@ -27,20 +27,22 @@ def ko_monthly_csv(scope='session'):
     return get_data()
 
 @pytest.fixture(scope='session')
-def ko_from_api_monthly():
+def ko_from_api_monthly(tmpdir_factory):
     """YFinance APIから取得したデータ"""
+    output_dir = tmpdir_factory.mktemp('output_csv')
     ko = YFA(CODE)
-    ko.monthly(OUTPUT_CSV)
-    df = pd.read_csv(os.path.join(OUTPUT_CSV, CODE + '.csv'), index_col=0, dtype=str).fillna('')
+    ko.monthly(output_dir)
+    df = pd.read_csv(os.path.join(output_dir, CODE + '.csv'), index_col=0, dtype=str).fillna('')
 
     return df
 
 @pytest.fixture(scope='session')
-def ko_from_api_monthly_ymd():
+def ko_from_api_monthly_ymd(tmpdir_factory):
     """YFinance APIから取得したデータ(開始／終了日付指定)"""
+    output_dir = tmpdir_factory.mktemp('output_csv')
     ko = YFA('KO', start=START8, end=END8)
-    ko.monthly(OUTPUT_CSV)
-    df = pd.read_csv(os.path.join(OUTPUT_CSV, CODE + '.csv'), index_col=0, dtype=str).fillna('')
+    ko.monthly(output_dir)
+    df = pd.read_csv(os.path.join(output_dir, CODE + '.csv'), index_col=0, dtype=str).fillna('')
 
     return df
 
