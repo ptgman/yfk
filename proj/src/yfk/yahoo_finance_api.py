@@ -24,7 +24,6 @@ class YahooFinanceApi:
         return the_day
 
     def __init__(self, code, period='max', start=None, end=None, interval='1d'):
-        print('*interval={}'.format(interval))
         '''
         period:
         start:  'YYYYMMDD'
