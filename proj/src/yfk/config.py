@@ -18,3 +18,5 @@ OUTPUT_DIR = os.path.join(YAHOO_FINANCE, YFK_CSV)
 YFK_MEIGARA = os.path.join(YAHOO_FINANCE, 'yfk_meigara', 'us-meigara.csv')
 YFK_BAT = 'yfk_bat'
 ERROR_CODES = 'error.csv'
+
+API_SLEEP = 1   # APIアクセスのウエイト(秒)

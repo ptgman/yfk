@@ -2,9 +2,10 @@
 # ver 0.0.2 #
 #############
 import sys, os
+import time
 import csv
 from yfk import YahooFinanceApi
-from yfk.config import OUTPUT_DIR, YFK_CSV, ERROR_CODES
+from yfk.config import OUTPUT_DIR, YFK_CSV, ERROR_CODES, API_SLEEP
 
 
 def main(csvfile, output_dir, max=True, start=None, end=None):
@@ -19,7 +20,7 @@ def main(csvfile, output_dir, max=True, start=None, end=None):
         next(cin)
 
         for row in cin:
-            yfa = YahooFinanceApi(row[0])
+            yfa = YahooFinanceApi(row[0], interval='1mo')
             try:
                 yfa.monthly(output_dir)
             except:
@@ -30,6 +31,8 @@ def main(csvfile, output_dir, max=True, start=None, end=None):
                         is_first_error = False
 
                     f.write(','.join(row) + '\n')
+
+            time.sleep(API_SLEEP)
 
 
 if __name__ == '__main__':

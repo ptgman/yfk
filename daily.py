@@ -1,8 +1,9 @@
 # 日足データ取得プログラム
 import sys, os, datetime
+import time
 import csv
 from yfk import YahooFinanceApi as YFA
-from yfk import YFK_MEIGARA, OUTPUT_DIR, YFK_CSV_DAY
+from yfk import YFK_MEIGARA, OUTPUT_DIR, YFK_CSV_DAY, API_SLEEP
 
 def main(date, output_dir):
     '''
@@ -53,6 +54,8 @@ def main(date, output_dir):
                     with open(error_log, 'at') as ef:
                         ef.write(code)
                         ef.write('\n')
+
+                time.sleep(API_SLEEP)
 
 
 

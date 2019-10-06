@@ -30,7 +30,7 @@ def ko_monthly_csv(scope='session'):
 def ko_from_api_monthly(tmpdir_factory):
     """YFinance APIから取得したデータ"""
     output_dir = tmpdir_factory.mktemp('output_csv')
-    ko = YFA(CODE)
+    ko = YFA(CODE, interval='1mo')
     ko.monthly(output_dir)
     df = pd.read_csv(os.path.join(output_dir, CODE + '.csv'), index_col=0, dtype=str).fillna('')
 
@@ -40,7 +40,7 @@ def ko_from_api_monthly(tmpdir_factory):
 def ko_from_api_monthly_ymd(tmpdir_factory):
     """YFinance APIから取得したデータ(開始／終了日付指定)"""
     output_dir = tmpdir_factory.mktemp('output_csv')
-    ko = YFA('KO', start=START8, end=END8)
+    ko = YFA('KO', start=START8, end=END8, interval='1mo')
     ko.monthly(output_dir)
     df = pd.read_csv(os.path.join(output_dir, CODE + '.csv'), index_col=0, dtype=str).fillna('')
 
@@ -167,7 +167,7 @@ def test_monthly_start_end(ko_monthly_csv, ko_from_api_monthly_ymd):
 
 def test_monthly_oldest(ko_monthly_csv, tmpdir):
     output_dir = tmpdir.mkdir('output_csv')
-    ko = YFA(CODE, period='max', end='19621231')
+    ko = YFA(CODE, period='max', end='19621231', interval='1mo')
     ko.monthly(str(output_dir))
     df2 = pd.read_csv(os.path.join(str(output_dir), CODE + '.csv'), index_col=0, dtype=str).fillna('')
     assert is_same_value(ko_monthly_csv.loc[:'1962-12-31'], df2)
