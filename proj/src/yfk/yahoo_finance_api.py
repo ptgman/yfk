@@ -11,13 +11,14 @@ class YahooFinanceApi:
     def _adjust_date(self, date):
         '''
         日付を補正して「YYYY-MM-DD」で返す
+        日付補正
         date: YYYYMMDD
         '''
 
         year = int(date[:4])
         month = int(date[4:6])
         day = int(date[6:])
-        after_one_day = datetime.date(year, month, day) + datetime.timedelta(1)
+        after_one_day = datetime.date(year, month, day) + datetime.timedelta(0)
         the_day = '{:04}-{:02}-{:02}'.format(
                 after_one_day.year, after_one_day.month, after_one_day.day)
 
