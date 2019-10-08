@@ -3,6 +3,7 @@
 #############
 import sys, os
 import time
+import random
 import csv
 from yfk import YahooFinanceApi
 from yfk.config import OUTPUT_DIR, YFK_CSV, ERROR_CODES, API_SLEEP
@@ -23,7 +24,8 @@ def main(csvfile, output_dir, max=True, start=None, end=None):
             yfa = YahooFinanceApi(row[0], interval='1mo')
             try:
                 yfa.monthly(output_dir)
-            except:
+            except Exception as e:
+                print(e)
                 print('銘柄:{}のデータが作成出来ませんでした。'.format(row[0]))
                 with open(os.path.join(output_dir, ERROR_CODES), 'at') as f:
                     if is_first_error:
@@ -32,7 +34,7 @@ def main(csvfile, output_dir, max=True, start=None, end=None):
 
                     f.write(','.join(row) + '\n')
 
-            time.sleep(API_SLEEP)
+            time.sleep(API_SLEEP - random.randint(2, 5) / 10)
 
 
 if __name__ == '__main__':

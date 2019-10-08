@@ -14,7 +14,7 @@ if __name__ == '__main__':
 
     start_time = datetime.datetime.now()
     yfkmain(YFK_MEIGARA, output_dir, max=True, start=None, end=None)
-    end_time = datetime.datetime.now()
 
+    end_time = datetime.datetime.now()
     print('It took {} seconds.'.format((end_time - start_time).seconds))
 

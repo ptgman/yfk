@@ -2,6 +2,7 @@
 #1234567890123456789012345678901234567890123456789012345678901234567890123456789
 import sys, os
 import datetime
+from dateutil.relativedelta import relativedelta
 import numpy as np
 import pandas as pd
 import yfinance as yf
@@ -95,6 +96,26 @@ class YahooFinanceApi:
 
         return hist
 
+    def _remove_daily_data(self, output_file):
+        df = pd.read_csv(output_file, index_col=0)
+
+        # 月足データ終端部の日足データを削除する
+        now = datetime.datetime.now()
+        now_day = '{:04}/{:02}/{:02}'.format(now.year, now.month, now.day)
+        mon_first = '{:04}/{:02}/{:02}'.format(now.year, now.month, 1)
+        end = datetime.datetime(now.year, now.month, 1) +\
+                relativedelta(months=1) - datetime.timedelta(1)
+        mon_end = '{:04}/{:02}/{:02}'.format(end.year, end.month, end.day)
+
+        # 今日が月末かつ今月最終データ日付が1日ならば何もしない
+        if now_day == mon_end and df.index[-1] == mon_end:
+            return
+
+        # 今月データを削除する
+        re_this_month = '^' + mon_first[:7]
+        monthly_data = df[~df.index.str.contains(re_this_month)]
+        monthly_data.to_csv(output_file)
+
     def monthly(self, output_dir):
         '''
         output_dir: CSVファイル出力ディレクトリ(YYYYMMDD_hhmmss)の絶対パス
@@ -112,7 +133,7 @@ class YahooFinanceApi:
         output_file = os.path.join(output_dir,
                 '{code}.csv'.format(code=self._code))
         hist.to_csv(output_file)
-
+        self._remove_daily_data(output_file)
         # dividends.to_csv('dividends.csv')
         # splits.to_csv('splits.csv')
 

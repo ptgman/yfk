@@ -104,7 +104,16 @@ getsuashi() {
     esac
 }
 
+##########
+# メイン #
+##########
+
+
 YFK_DIR=$(cd $(dirname $0); pwd)
+
+# バージョン番号を取得＆表示
+VERSION=$(grep version proj/setup.py | cut -d"=" -f2 | sed -e "s/'//g" -e 's/,//')
+echo '***' YFK v$VERSION '***'
 
 # データ取得パラメータを収集
 

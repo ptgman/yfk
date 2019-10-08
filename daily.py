@@ -1,5 +1,5 @@
 # 日足データ取得プログラム
-import sys, os, datetime
+import sys, os, datetime, random
 import time
 import csv
 from yfk import YahooFinanceApi as YFA
@@ -55,11 +55,13 @@ def main(date, output_dir):
                         ef.write(code)
                         ef.write('\n')
 
-                time.sleep(API_SLEEP)
+                time.sleep(API_SLEEP - random.randint(2, 5) / 10)
 
 
 
 if __name__ == '__main__':
+    start_time = datetime.datetime.now()
+
     if len(sys.argv) != 2:
         print('引数の指定が間違っています')
         print('python {} 日付'.format(__file__))
@@ -71,6 +73,7 @@ if __name__ == '__main__':
     date = sys.argv[1]
 
     # CSVファイル書き込みディレクトリを作る
+    now = datetime.datetime.today()
     now_time = datetime.datetime.now()
     daily_dir = '{:04}{:02}{:02}_{:02}{:02}{:02}'.format(
             now_time.year, now_time.month, now_time.day,
@@ -79,3 +82,6 @@ if __name__ == '__main__':
     os.makedirs(output_dir)
 
     main(date, output_dir)
+
+    end_time = datetime.datetime.now()
+    print('It took {} seconds.'.format((end_time - start_time).seconds))
