@@ -1,0 +1,57 @@
+import pytest
+from yfk import BaseDate
+
+@pytest.fixture(scope='session')
+def normal_date():
+    return BaseDate(2010, 8, 21)
+
+@pytest.fixture()
+def leap_year_feb28():    # 閏年の2月29日
+    return BaseDate(2012, 2, 28) 
+
+@pytest.fixture()
+def leap_year_feb29():    # 閏年の2月29日
+    return BaseDate(2012, 2, 29) 
+
+def test_after_year(normal_date):
+    '''
+    n年間のテスト
+    '''
+    assert str(normal_date.after_year(1)) == str(BaseDate(2011, 8, 20))
+
+def test_before_year(normal_date):
+    '''
+    過去n年間のテスト
+    '''
+    assert str(normal_date.before_year(1)) == str(BaseDate(2009, 8, 22))
+
+def test_after_month(normal_date):
+    '''
+    nヶ月間のテスト
+    '''
+    assert str(normal_date.after_month(1)) == str(BaseDate(2010, 9, 20))
+
+def test_before_month(normal_date):
+    '''
+    過去nヶ月間のテスト
+    '''
+    assert str(normal_date.before_month(1)) == str(BaseDate(2010, 7, 22))
+
+################
+# 閏年のテスト #
+################
+def test_leap_after_year(leap_year_feb28, leap_year_feb29):
+    assert str(leap_year_feb28.after_year(1)) == str(BaseDate(2013, 2, 27))
+    assert str(leap_year_feb29.after_year(1)) == str(BaseDate(2013, 2, 27))
+
+def test_leap_before_year(leap_year_feb28, leap_year_feb29):
+    assert str(leap_year_feb28.before_year(1)) == str(BaseDate(2011, 3, 1))
+    assert str(leap_year_feb29.before_year(1)) == str(BaseDate(2011, 3, 1))
+
+def test_leap_after_month(leap_year_feb28, leap_year_feb29):
+    assert str(leap_year_feb28.after_month(1)) == str(BaseDate(2012, 3, 27))
+    assert str(leap_year_feb29.after_month(1)) == str(BaseDate(2012, 3, 28))
+
+def test_leap_before_month(leap_year_feb28, leap_year_feb29):
+    assert str(leap_year_feb28.before_month(1)) == str(BaseDate(2012, 1, 29))
+    assert str(leap_year_feb29.before_month(1)) == str(BaseDate(2012, 1, 30))
