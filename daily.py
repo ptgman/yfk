@@ -13,7 +13,7 @@ def main(date, output_dir):
     date_slash = '{:04}/{:02}/{:02}'.format(
             int(date[:4]), int(date[4:6]), int(date[6:]))
     csv_file = os.path.join(output_dir, date + '.csv')
-    error_log = os.path.join(output_dir, 'error_code.log')
+    # error_log = os.path.join(output_dir, 'error_code.log')
 
     with open(csv_file, 'wt') as wf:
         wf.write('Ticker,Open,High,Low,Close,Adj.Close,Volume,Dividends Date,Dividends,Splits Date,Splits\n')
@@ -51,9 +51,12 @@ def main(date, output_dir):
                     wf.write(line)
                     wf.write('\n')
                 except:
-                    with open(error_log, 'at') as ef:
-                        ef.write(code)
-                        ef.write('\n')
+                    line = '{Ticker},,,,,,,,,,'.format(Ticker=code)
+                    wf.write(line)
+                    wf.write('\n')
+                    # with open(error_log, 'at') as ef:
+                    #     ef.write(code)
+                    #     ef.write('\n')
 
                 time.sleep(API_SLEEP - random.randint(2, 5) / 10)
 
