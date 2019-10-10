@@ -18,24 +18,33 @@ def test_after_year(normal_date):
     n年間のテスト
     '''
     assert str(normal_date.after_year(1)) == str(BaseDate(2011, 8, 20))
+    assert str(normal_date.after_year(2)) == str(BaseDate(2012, 8, 20))
+    assert str(normal_date.after_year(3)) == str(BaseDate(2013, 8, 20))
 
 def test_before_year(normal_date):
     '''
     過去n年間のテスト
     '''
     assert str(normal_date.before_year(1)) == str(BaseDate(2009, 8, 22))
+    assert str(normal_date.before_year(2)) == str(BaseDate(2008, 8, 22))
+    assert str(normal_date.before_year(3)) == str(BaseDate(2007, 8, 22))
 
 def test_after_month(normal_date):
     '''
     nヶ月間のテスト
     '''
     assert str(normal_date.after_month(1)) == str(BaseDate(2010, 9, 20))
+    assert str(normal_date.after_month(2)) == str(BaseDate(2010, 10, 20))
+    assert str(normal_date.after_month(3)) == str(BaseDate(2010, 11, 20))
+    assert str(normal_date.after_month(5)) == str(BaseDate(2011, 1, 20))
 
 def test_before_month(normal_date):
     '''
     過去nヶ月間のテスト
     '''
     assert str(normal_date.before_month(1)) == str(BaseDate(2010, 7, 22))
+    assert str(normal_date.before_month(2)) == str(BaseDate(2010, 6, 22))
+    assert str(normal_date.before_month(3)) == str(BaseDate(2010, 5, 22))
 
 ################
 # 閏年のテスト #

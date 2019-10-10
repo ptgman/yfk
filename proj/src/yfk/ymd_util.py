@@ -19,7 +19,7 @@ class BaseDate:
         基準年月日が2010年8月21日の時、2011年8月20日になる
         n: n年間
         '''
-        the_date = self._date + relativedelta(years=1) - datetime.timedelta(1)
+        the_date = self._date + relativedelta(years=n) - datetime.timedelta(1)
 
         return BaseDate(the_date.year, the_date.month, the_date.day)
 
@@ -29,7 +29,7 @@ class BaseDate:
         基準年月日が2010年8月21日の時、2009年8月22日になる
         n: n年間
         '''
-        the_date = self._date - relativedelta(years=1) + datetime.timedelta(1)
+        the_date = self._date - relativedelta(years=n) + datetime.timedelta(1)
 
         return BaseDate(the_date.year, the_date.month, the_date.day)
 
@@ -39,7 +39,7 @@ class BaseDate:
         基準年月日が2010年8月21日の時、2010年9月20日になる
         n: nヶ月間
         '''
-        the_date = self._date + relativedelta(months=1) - datetime.timedelta(1)
+        the_date = self._date + relativedelta(months=n) - datetime.timedelta(1)
 
         return BaseDate(the_date.year, the_date.month, the_date.day)
 
@@ -49,7 +49,7 @@ class BaseDate:
         基準年月日が2010年8月21日の時、2009年8月22日になる
         n: 過去nヶ月間
         '''
-        the_date = self._date - relativedelta(months=1) + datetime.timedelta(1)
+        the_date = self._date - relativedelta(months=n) + datetime.timedelta(1)
 
         return BaseDate(the_date.year, the_date.month, the_date.day)
 
