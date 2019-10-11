@@ -16,9 +16,6 @@ class SelectCsv:
             start_df = original_df.loc[:]
 
         if end:
-            # print('type(end) = ', type(end))
-            # print('str(end) = ', str(end))
-            # print(type(start_df.index))
             end_df = start_df.loc[start_df.index <= str(end)]
         else:
             end_df = start_df
