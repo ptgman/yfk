@@ -1,6 +1,8 @@
 import datetime
 from dateutil.relativedelta import relativedelta
+from functools import total_ordering
 
+@total_ordering
 class BaseDate:
     '''
     基準となる日付クラス
@@ -12,6 +14,18 @@ class BaseDate:
         day     : 日
         '''
         self._date = datetime.datetime(year, month, day)
+
+    def __eq__(self, other):
+        if not isinstance(other, BaseDate):
+            return NotImplemented
+
+        return str(self) == str(other)
+
+    def __lt__(self, other):
+        if not isinstance(other, BaseDate):
+            return NotImplemented
+
+        return str(self) < str(other)
 
     def after_year(self, n):
         '''

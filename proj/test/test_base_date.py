@@ -64,3 +64,36 @@ def test_leap_after_month(leap_year_feb28, leap_year_feb29):
 def test_leap_before_month(leap_year_feb28, leap_year_feb29):
     assert str(leap_year_feb28.before_month(1)) == str(BaseDate(2012, 1, 29))
     assert str(leap_year_feb29.before_month(1)) == str(BaseDate(2012, 1, 30))
+
+####################
+# 日付の大小テスト #
+####################
+def test_equal():
+    d1 = BaseDate(2019, 10, 10)
+    d2 = BaseDate(2019, 10, 10)
+    assert d1 == d2
+
+def test_less_or_equal():
+    d1 = BaseDate(2019, 10, 10)
+    d2 = BaseDate(2019, 10, 10)
+    d3 = BaseDate(2019, 3, 10)
+    assert d2 <= d1
+    assert d3 <= d1
+
+def test_less_than():
+    d1 = BaseDate(2019, 10, 10)
+    d3 = BaseDate(2019, 3, 10)
+    assert d3 < d1
+
+def test_greater_or_equal():
+    d1 = BaseDate(2019, 10, 10)
+    d2 = BaseDate(2019, 10, 10)
+    d3 = BaseDate(2020, 10, 10)
+    assert d2 >= d1
+    assert d3 >= d1
+
+def test_greater_than():
+    d1 = BaseDate(2019, 10, 10)
+    d3 = BaseDate(2020, 3, 10)
+    assert d3 > d1
+
