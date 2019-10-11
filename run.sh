@@ -72,17 +72,17 @@ getsuashi() {
         echo '月足データを取得します'
         echo '取得したいデータの範囲を選んで下さい'
         echo '0) 全件'
-        echo '1) YYYYMM〜YYYYMM'
-        echo '2) ◯ヶ月前〜YYYYMM'
-        echo '3) ◯年前〜YYYYMM'
-        echo '4) OLDEST〜YYYYMM'
-        echo '5) YYYYMM〜◯ヶ月後'
-        echo '6) YYYYMM〜◯年後'
-        echo '7) YYYYMMDD〜最新'
+        # echo '1) YYYYMM〜YYYYMM'
+        # echo '2) ◯ヶ月前〜YYYYMM'
+        # echo '3) ◯年前〜YYYYMM'
+        # echo '4) OLDEST〜YYYYMM'
+        # echo '5) YYYYMM〜◯ヶ月後'
+        # echo '6) YYYYMM〜◯年後'
+        # echo '7) YYYYMMDD〜最新'
 
         read TERM
 
-        PAT=$(echo $TERM | egrep '^[0-7]$')
+        PAT=$(echo $TERM | egrep '^[0]$')
         if [ "$PAT" = "" ]; then
             echo "入力内容が間違っています。"
             echo ""
@@ -94,13 +94,13 @@ getsuashi() {
 
     case "$PAT" in
         "0" ) mon_all ;;
-        "1" ) mon_yyyymm ;;
-        "2" ) mon_bm_yyyymm ;;
-        "3" ) mon_by_yyyymm ;;
-        "4" ) mon_min_yyyymm ;;
-        "5" ) mon_am_yyyymm ;;
-        "6" ) mon_ay_yyyymm ;;
-        "7" ) mon_max_yyyymm ;;
+        # "1" ) mon_yyyymm ;;
+        # "2" ) mon_bm_yyyymm ;;
+        # "3" ) mon_by_yyyymm ;;
+        # "4" ) mon_min_yyyymm ;;
+        # "5" ) mon_am_yyyymm ;;
+        # "6" ) mon_ay_yyyymm ;;
+        # "7" ) mon_max_yyyymm ;;
     esac
 }
 
