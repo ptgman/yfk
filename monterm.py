@@ -63,10 +63,10 @@ python monterm.py 2005/08/10 --by 7
 
 基準日とオプション指定は逆でも良い
 以下は、どれでも良い
-python monterm.py 2017/05/05 --am 3
-python monterm.py 2017/05/05 --am=3
-python monterm.py --am 3 2017/05/05
-python monterm.py --am=3 2017/05/05
+yfk/monterm.sh 2017/05/05 --am 3
+yfk/monterm.sh 2017/05/05 --am=3
+yfk/monterm.sh --am 3 2017/05/05
+yfk/monterm.sh --am=3 2017/05/05
 
 --am/--bm/--ay/--am/--old/--toはいずれか一つしか指定できない
 
